@@ -1,0 +1,38 @@
+# Build directories and CMake outputs
+build/
+CMakeFiles/
+CMakeCache.txt
+*.ninja*
+.ninja_*
+*.dir/
+
+# Compiler and Linker artifacts
+*.obj
+*.res
+*.pdb
+*.ilk
+*.exp
+*.lib
+!third_party/**/WebView2LoaderStatic.lib
+
+# WebView2 Browser Cache
+*.WebView2/
+ZapretPrivate.exe.WebView2/
+EBWebView/
+
+# Logs, diagnostics, and personal machine configs
+*.log
+debug.log
+*.old
+*.bak
+*.tmp
+scan_cache.json
+original_dns.json
+presets_extracted.xml
+
+# IDE & Editor folders
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
