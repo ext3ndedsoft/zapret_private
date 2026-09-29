@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zapret Private</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Luxury Custom Titlebar -->
+        <header class="titlebar" data-drag>
+            <div class="titlebar-brand" data-drag>
+                <div class="brand-monogram">
+                    <img src="logo.png" alt="Zapret Private" class="brand-logo-img" />
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">ZAPRET <span class="gold-gradient-text">PRIVATE</span></span>
+                    <span class="brand-subtitle">ULTRA-FAST DPI DESYNC SUITE</span>
+                </div>
+            </div>
+
+            <div class="titlebar-status-pill" id="titlebarStatusPill">
+                <span class="pill-dot"></span>
+                <span class="pill-text" id="titlebarStatusText">Отключен</span>
+            </div>
+        </header>
+
+        <!-- Main Body: Sidebar + Content -->
+        <div class="app-body">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="nav-indicator" id="navIndicator"></div>
+                <button class="nav-item active" data-tab="dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span>Обзор</span>
+                </button>
+                <button class="nav-item" data-tab="presets">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    <span>Пресеты</span>
+                    <span class="nav-badge" id="presetsCountBadge">25</span>
+                </button>
+                <button class="nav-item" data-tab="generator">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    <span>Генератор</span>
+                    <span class="nav-badge gold-badge">AI/PRO</span>
+                </button>
+                <button class="nav-item" data-tab="netscan">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                    <span>Диагностика</span>
+                    <span class="nav-badge" id="netscanBadge">Сеть</span>
+                </button>
+                <button class="nav-item" data-tab="lists">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    <span>Списки</span>
+                </button>
+                <button class="nav-item" data-tab="terminal">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="4 17 10 11 4 5"/>
+                        <line x1="12" y1="19" x2="20" y2="19"/>
+                    </svg>
+                    <span>Консоль</span>
+                </button>
+
+                <div class="sidebar-spacer"></div>
+
+                <div class="sidebar-telemetry">
+                    <div class="telemetry-item">
+                        <span class="telemetry-label">DNS / Ping</span>
+                        <span class="telemetry-val" id="sbPingVal">-- ms</span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="telemetry-label">Режим</span>
+                        <span class="telemetry-val gold-text" id="sbModeVal">Standby</span>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content Pages -->
+            <main class="content-viewport">
+                <!-- Page 1: Dashboard -->
+                <section class="tab-pane active" id="pane-dashboard">
+                    <div class="hero-control-card">
+                        <div class="hero-glow" id="heroGlow"></div>
+                        <div class="hero-header">
+                            <div>
+                                <h1 class="hero-title">Мастер-контроль обхода</h1>
+                                <p class="hero-subtitle">Высокоскоростной DPI-десинхронизатор пакетов WinDivert без прокси и VPN</p>
+                            </div>
+                            <div class="engine-state-badge" id="engineStateBadge">
+                                <span class="state-icon-pulse"></span>
+                                <span class="state-text" id="engineStateText">Готов к запуску</span>
+                            </div>
+                        </div>
+
+                        <!-- Big Luxury Master Power Switch -->
+                        <div class="power-master-wrapper">
+                            <button class="luxury-power-button" id="btnMasterPower">
+                                <div class="power-ring-outer"></div>
+                                <div class="power-ring-inner"></div>
+                                <div class="power-icon-wrap">
+                                    <svg class="power-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
+                                        <line x1="12" y1="2" x2="12" y2="12"/>
+                                    </svg>
+                                </div>
+                                <span class="power-button-label" id="btnMasterPowerLabel">ВКЛЮЧИТЬ</span>
+                            </button>
+                        </div>
+
+                        <!-- Telemetry Grid -->
+                        <div class="dashboard-grid">
+                            <div class="glass-card stat-card">
+                                <div class="stat-card-header">
+                                    <span class="stat-title">Активная стратегия</span>
+                                    <span class="stat-tag gold-tag" id="cardStrategyTag">ULTIMATE</span>
+                                </div>
+                                <div class="stat-value-primary" id="cardStrategyName">ultimate_hybrid</div>
+                                <div class="stat-desc">Оптимизировано: YouTube 4K, Игры, Discord VoIP и AI</div>
+                                <button class="btn-card-action" id="btnQuickSwitchPreset">Сменить стратегию</button>
+                            </div>
+
+                            <div class="glass-card stat-card" id="cardAiBypass">
+                                <div class="stat-card-header">
+                                    <span class="stat-title">Скрытие локации & DNS</span>
+                                    <span class="stat-tag" id="dashAiStatusTag">ОТКЛЮЧЕНО</span>
+                                </div>
+                                <div class="stat-value-primary" id="dashAiStatusVal">Прямое подключение</div>
+                                <div class="stat-desc">ChatGPT, Claude, Xbox Live, PSN, EA App без VPN</div>
+                                <div style="margin: 8px 0;">
+                                    <select id="selectDnsProfile" class="luxury-select" style="font-size: 11px; padding: 6px 10px;">
+                                        <option value="comss_ai" selected>Comss.one AI Bypass (ChatGPT, Claude, Gemini, Antigravity)</option>
+                                        <option value="xbox_electro">Xbox-DNS (111.88.96.54 / 111.88.96.55 — xbox-dns.ru)</option>
+                                        <option value="shecan">Shecan DNS (Обход региональных санкций и блокировок)</option>
+                                        <option value="cloudflare">Cloudflare Fast DNS (1.1.1.1 — Высокая скорость)</option>
+                                        <option value="google">Google Public DNS (8.8.8.8 — Глобальная стабильность)</option>
+                                        <option value="quad9">Quad9 Secure DNS (9.9.9.9 — Швейцарский щит)</option>
+                                    </select>
+                                </div>
+                                <button class="btn-card-action" id="btnDashToggleAi">Включить подмену DNS</button>
+                            </div>
+
+                            <div class="glass-card stat-card">
+                                <div class="stat-card-header">
+                                    <span class="stat-title">Режим Windows Службы</span>
+                                    <span class="stat-tag" id="cardServiceTag">NOT INSTALLED</span>
+                                </div>
+                                <div class="stat-value-primary" id="cardServiceVal">Фоновый процесс</div>
+                                <div class="stat-desc">Автономная работа в фоне даже до входа в систему</div>
+                                <button class="btn-card-action" id="btnToggleServiceMode">Установить службу</button>
+                            </div>
+                        </div>
+
+                        <!-- AI Smart DNS Guidance Banner -->
+                        <div class="ai-banner-strip" id="dashAiBanner">
+                            <span class="ai-banner-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15 2a6 6 0 0 0-7.33 9.49 4 4 0 0 1 1.33 3.51h6a4 4 0 0 1 1.33-3.51A6 6 0 0 0 15 2z"/></svg>
+                            </span>
+                            <span class="ai-banner-text">
+                                <strong>Для работы ChatGPT / Claude без VPN:</strong> нажмите «Включить обход ИИ». Если в браузере активен «Безопасный DNS» (DoH в Chrome / Edge / Яндекс), выберите в настройках браузера <em>«Использовать системные параметры DNS»</em>.
+                            </span>
+                        </div>
+
+                        <!-- Latency Radar Grid -->
+                        <div class="latency-radar-section">
+                            <div class="section-heading">
+                                <h2>Мониторинг задержки & Доступность сервисов</h2>
+                                <button class="btn-ghost-small" id="btnRefreshPings">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                                    Обновить пинг
+                                </button>
+                            </div>
+
+                            <div class="ping-cards-row">
+                                <div class="ping-card">
+                                    <div class="ping-card-left">
+                                        <div class="service-logo discord-logo">DC</div>
+                                        <div class="ping-service-info">
+                                            <span class="service-name">Discord Voice</span>
+                                            <span class="service-endpoint">discord.com</span>
+                                        </div>
+                                    </div>
+                                    <div class="ping-badge-val" id="pingDiscord">-- ms</div>
+                                </div>
+
+                                <div class="ping-card">
+                                    <div class="ping-card-left">
+                                        <div class="service-logo yt-logo">YT</div>
+                                        <div class="ping-service-info">
+                                            <span class="service-name">YouTube Video</span>
+                                            <span class="service-endpoint">googlevideo.com</span>
+                                        </div>
+                                    </div>
+                                    <div class="ping-badge-val" id="pingYoutube">-- ms</div>
+                                </div>
+
+                                <div class="ping-card">
+                                    <div class="ping-card-left">
+                                        <div class="service-logo cf-logo">CF</div>
+                                        <div class="ping-service-info">
+                                            <span class="service-name">Cloudflare DNS</span>
+                                            <span class="service-endpoint">1.1.1.1</span>
+                                        </div>
+                                    </div>
+                                    <div class="ping-badge-val" id="pingCloudflare">-- ms</div>
+                                </div>
+
+                                <div class="ping-card">
+                                    <div class="ping-card-left">
+                                        <div class="service-logo google-logo">GG</div>
+                                        <div class="ping-service-info">
+                                            <span class="service-name">Google DNS</span>
+                                            <span class="service-endpoint">8.8.8.8</span>
+                                        </div>
+                                    </div>
+                                    <div class="ping-badge-val" id="pingGoogle">-- ms</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Page 2: Presets Library -->
+                <section class="tab-pane" id="pane-presets">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Библиотека Пресетов Десинхронизации</h1>
+                            <p class="page-subtitle">24 адаптированные стратегии обхода ТСПУ / DPI для всех интернет-провайдеров РФ</p>
+                        </div>
+                        <div class="presets-search-box">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                            <input type="text" id="presetSearchInput" placeholder="Поиск пресета (gaming, alt, hybrid, fake...)" />
+                        </div>
+                    </div>
+
+                    <div class="category-filters" id="presetCategoryFilters">
+                        <button class="filter-pill active" data-filter="all">Все</button>
+                        <button class="filter-pill" data-filter="Пользовательские">Пользовательские</button>
+                        <button class="filter-pill" data-filter="Gaming & UDP">Игры & UDP</button>
+                        <button class="filter-pill" data-filter="Master Ultimate">Master Ultimate</button>
+                        <button class="filter-pill" data-filter="Recommended">Рекомендованные</button>
+                        <button class="filter-pill" data-filter="Fake TLS">Fake TLS Auto</button>
+                        <button class="filter-pill" data-filter="General ALT">General ALT</button>
+                    </div>
+
+                    <div class="presets-grid" id="presetsGridContainer">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <!-- Additional Tuning: Game Ports Filter & Payloads -->
+                    <div class="presets-extra-settings" id="presetsExtraSettings">
+                        <div class="glass-card gaming-feature-card">
+                            <div class="feature-card-header">
+                                <div class="feature-icon-badge network-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="feature-title">Фильтрация игровых портов (GameFilter)</h3>
+                                    <p class="feature-desc">Перехватывать ли динамические игровые порты 1024-65535 в правилах WinDivert для онлайн-игр и Discord</p>
+                                </div>
+                            </div>
+                            <div class="filter-mode-selector">
+                                <label class="radio-label">
+                                    <input type="radio" name="gfMode" value="all" id="gfAll">
+                                    <span class="radio-custom"></span>
+                                    <span>Включено (TCP и UDP 1024-65535)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gfMode" value="udp" id="gfUdp">
+                                    <span class="radio-custom"></span>
+                                    <span>Только UDP (Рекомендуется для Discord Voice)</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gfMode" value="tcp" id="gfTcp">
+                                    <span class="radio-custom"></span>
+                                    <span>Только TCP</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gfMode" value="disabled" id="gfDisabled">
+                                    <span class="radio-custom"></span>
+                                    <span>Отключено (Только стандартные порты 80, 443)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="glass-card gaming-feature-card">
+                            <div class="feature-card-header">
+                                <div class="feature-icon-badge fake-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="feature-title">Активные фейковые пакеты (Fake Payloads)</h3>
+                                    <p class="feature-desc">Выбор бинарного шаблона фейковых пакетов, отправляемых ТСПУ для обхода DPI</p>
+                                </div>
+                            </div>
+
+                            <div class="fake-selectors-row">
+                                <div class="fake-selector-box">
+                                    <span class="fake-label">Discord UDP Fake:</span>
+                                    <select id="selectDiscordFake" class="luxury-select"></select>
+                                    <button class="btn-ghost-small" id="btnApplyDiscordFake">Заменить</button>
+                                </div>
+                                <div class="fake-selector-box">
+                                    <span class="fake-label">Game UDP Fake:</span>
+                                    <select id="selectGameFake" class="luxury-select"></select>
+                                    <button class="btn-ghost-small" id="btnApplyGameFake">Заменить</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card gaming-feature-card">
+                            <div class="feature-card-header">
+                                <div class="feature-icon-badge trash-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="feature-title">Сброс и очистка кэша Discord</h3>
+                                    <p class="feature-desc">Удаляет зависший сетевой кэш, GPUCache и Code Cache для Discord, Discord PTB и Canary</p>
+                                </div>
+                            </div>
+                            <div class="feature-controls">
+                                <button class="btn-luxury-secondary" id="btnClearDiscordCache">
+                                    Очистить кэш Discord
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Page: Preset Generator Engine -->
+                <section class="tab-pane" id="pane-generator">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Генератор Идеального Пресета</h1>
+                            <p class="page-subtitle">Индивидуальный расчет и синтез правил под все игры, YouTube 4K/60, Discord и нейросети с автоподменой локации</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn-luxury-primary" id="btnAutoBenchmarkRun">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                Авто-калибровка под сеть
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Smart Benchmark Card -->
+                    <div class="glass-card benchmark-status-card" id="benchmarkCard">
+                        <div class="benchmark-header">
+                            <div class="benchmark-info">
+                                <span class="benchmark-tag">SMART AUTO-TUNING</span>
+                                <h3 class="benchmark-title" id="benchmarkTitle">Адаптивный анализ ТСПУ и DPI провайдера</h3>
+                                <p class="benchmark-desc" id="benchmarkDesc">Нажмите «Авто-калибровка под сеть» для сканирования расстояния до фильтров, определения MTU и автоподбора идеальных фейковых заголовков.</p>
+                            </div>
+                            <div class="benchmark-stats-row" id="benchmarkStatsRow">
+                                <div class="b-stat">
+                                    <span class="b-stat-lbl">DPI Hops</span>
+                                    <span class="b-stat-val gold-text" id="statDpiHops">--</span>
+                                </div>
+                                <div class="b-stat">
+                                    <span class="b-stat-lbl">Оптимальный TTL</span>
+                                    <span class="b-stat-val emerald-text" id="statOptTtl">--</span>
+                                </div>
+                                <div class="b-stat">
+                                    <span class="b-stat-lbl">Режим повторов</span>
+                                    <span class="b-stat-val" id="statRepeats">8x</span>
+                                </div>
+                                <div class="b-stat">
+                                    <span class="b-stat-lbl">Fake SNI</span>
+                                    <span class="b-stat-val" id="statFakeSni">Google TLS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generator Modules Configuration -->
+                    <div class="generator-grid">
+                        <div class="glass-card gen-module-card">
+                            <div class="gen-module-header">
+                                <div class="module-title-wrap">
+                                    <span class="module-icon">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+                                    </span>
+                                    <div>
+                                        <h4>Все онлайн-игры (Gaming Low-Latency)</h4>
+                                        <p>CS2, Valorant, Apex Legends, Fortnite, Steam UDP 1024-65535, cutoff=n2 для нулевого инпутлага</p>
+                                    </div>
+                                </div>
+                                <label class="luxury-switch">
+                                    <input type="checkbox" id="genChkGames" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="glass-card gen-module-card">
+                            <div class="gen-module-header">
+                                <div class="module-title-wrap">
+                                    <span class="module-icon">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><polygon points="10 8 15 11 10 14 10 8"/></svg>
+                                    </span>
+                                    <div>
+                                        <h4>YouTube 4K 60FPS Stream Accelerator</h4>
+                                        <p>QUIC bypass, Zero IP-ID и десинхронизация CDN googlevideo для мгновенного буфера</p>
+                                    </div>
+                                </div>
+                                <label class="luxury-switch">
+                                    <input type="checkbox" id="genChkYoutube" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="glass-card gen-module-card active-gold-border">
+                            <div class="gen-module-header">
+                                <div class="module-title-wrap">
+                                    <span class="module-icon">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+                                    </span>
+                                    <div>
+                                        <h4>Нейросети & AI (Обход геоблокировок с ложным SNI)</h4>
+                                        <p>ChatGPT, OpenAI API, Claude, Google Gemini, Perplexity — подмена заголовков под доверенный трафик</p>
+                                    </div>
+                                </div>
+                                <label class="luxury-switch">
+                                    <input type="checkbox" id="genChkAI" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="glass-card gen-module-card">
+                            <div class="gen-module-header">
+                                <div class="module-title-wrap">
+                                    <span class="module-icon">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                                    </span>
+                                    <div>
+                                        <h4>Discord Voice & Media Gateway</h4>
+                                        <p>Двойной STUN desync, аудио-порты 19294-19344, 50000-50100 и медиа-домены</p>
+                                    </div>
+                                </div>
+                                <label class="luxury-switch">
+                                    <input type="checkbox" id="genChkDiscord" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Provider Optimization Profile Selection (Individual Choices) -->
+                    <div class="glass-card" style="padding: 20px 24px; margin-bottom: 20px; border-radius: var(--radius-lg); background: rgba(18, 21, 29, 0.85); border: 1px solid var(--border-subtle);">
+                        <div style="margin-bottom: 12px;">
+                            <h4 style="font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px;">Профиль обхода под провайдера РФ</h4>
+                            <p style="font-size: 12px; color: var(--text-secondary);">Выберите вашего интернет-провайдера для адаптации параметров десинхронизации (multisplit, split2, autottl, fooling) под его ТСПУ</p>
+                        </div>
+                        <div class="provider-tiles-grid" id="providerTilesContainer">
+                            <button type="button" class="provider-tile active" data-provider="auto">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Авто-определение</span>
+                                    <span class="provider-tile-desc">По зондированию ТСПУ</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="rostelecom">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="8" y1="6" x2="10" y2="6"/><line x1="14" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Ростелеком</span>
+                                    <span class="provider-tile-desc">РТК / Онлайм / Qwerty</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="domru">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Дом.ру</span>
+                                    <span class="provider-tile-desc">ЭР-Телеком / Акадо</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="mts">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">МТС / МГТС</span>
+                                    <span class="provider-tile-desc">Домашний GPON / FTTB</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="beeline">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Билайн</span>
+                                    <span class="provider-tile-desc">Корбина / FTTB ШПД</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="ttk">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="19" x2="20" y2="19"/><line x1="4" y1="5" x2="20" y2="5"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="8" y1="5" x2="8" y2="19"/><line x1="16" y1="5" x2="16" y2="19"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">ТТК (РЖД)</span>
+                                    <span class="provider-tile-desc">ТрансТелеКом сеть</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="ufanet">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Уфанет</span>
+                                    <span class="provider-tile-desc">Урал и Поволжье</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="intersvyaz">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Интерсвязь</span>
+                                    <span class="provider-tile-desc">Южный Урал / Оптика</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="tattelecom">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 19 22 12 13 5 13 19"/><polygon points="2 19 11 12 2 5 2 19"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Таттелеком</span>
+                                    <span class="provider-tile-desc">Летай (Татарстан)</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="citylink">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Ситилинк</span>
+                                    <span class="provider-tile-desc">Северо-Запад ШПД</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="regional">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Региональные ШПД</span>
+                                    <span class="provider-tile-desc">Convex, SkyNet, Владлинк</span>
+                                </div>
+                            </button>
+                            <button type="button" class="provider-tile" data-provider="aggressive">
+                                <span class="provider-tile-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                                </span>
+                                <div class="provider-tile-info">
+                                    <span class="provider-tile-name">Макс. пробив</span>
+                                    <span class="provider-tile-desc">Тяжелые ТСПУ (12x)</span>
+                                </div>
+                            </button>
+                        </div>
+                        <input type="hidden" id="genProviderPreset" value="auto">
+                    </div>
+
+                    <!-- Fine-Tuning Controls -->
+                    <div class="glass-card gen-params-card">
+                        <h3 class="params-card-title">Параметры тонкой настройки</h3>
+                        <div class="params-row">
+                            <div class="param-group">
+                                <label>Смещение разбиения (Split Position)</label>
+                                <select id="genSplitPos" class="luxury-select">
+                                    <option value="1" selected>Позиция 1 (Рекомендовано для РФ)</option>
+                                    <option value="2">Позиция 2 (Альтернативная)</option>
+                                </select>
+                            </div>
+
+                            <div class="param-group">
+                                <label>Число повторов десинка (Repeats)</label>
+                                <select id="genRepeats" class="luxury-select">
+                                    <option value="6">6 повторов (Экономный режим)</option>
+                                    <option value="8" selected>8 повторов (Сбалансированный)</option>
+                                    <option value="11">11 повторов (Максимальная пробиваемость)</option>
+                                    <option value="12">12 повторов (Агрессивный)</option>
+                                </select>
+                            </div>
+
+                            <div class="param-group">
+                                <label>Авто-TTL (Дистанция до ТСПУ)</label>
+                                <select id="genAutoTtl" class="luxury-select">
+                                    <option value="2" selected>TTL = 2 (Автоматически рассчитано)</option>
+                                    <option value="1">TTL = 1 (Близкий DPI)</option>
+                                    <option value="3">TTL = 3 (Магистральный DPI)</option>
+                                    <option value="4">TTL = 4 (Глубокий DPI)</option>
+                                </select>
+                            </div>
+
+                            <div class="param-group">
+                                <label>Подменяемый TLS ClientHello</label>
+                                <select id="genFakeTls" class="luxury-select">
+                                    <option value="tls_clienthello_www_google_com.bin" selected>Google TLS (www.google.com)</option>
+                                    <option value="tls_clienthello_max_ru.bin">Max RU (max.ru)</option>
+                                    <option value="tls_clienthello_4pda_to.bin">4PDA (4pda.to)</option>
+                                    <option value="tls_clienthello_sochi_park.bin">Sochi Park</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Explicit Generate Trigger Button -->
+                        <div style="margin: 20px 0 16px 0;">
+                            <button class="btn-luxury-primary btn-large" id="btnGeneratePresetManual" style="width: 100%; justify-content: center; font-size: 14.5px; padding: 14px 22px; box-shadow: 0 4px 24px rgba(223, 180, 102, 0.25);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                Сгенерировать идеальный пресет под выбранные параметры
+                            </button>
+                        </div>
+
+                        <!-- Command preview box -->
+                        <div class="command-preview-box">
+                            <div class="preview-header">
+                                <span>Сформированная командная строка WinDivert:</span>
+                                <button class="btn-ghost-small" id="btnCopyGeneratedCmd">Скопировать</button>
+                            </div>
+                            <textarea id="genArgsPreview" class="preview-textarea" readonly></textarea>
+                        </div>
+
+                        <!-- Generation Actions -->
+                        <div class="generator-actions-row">
+                            <button class="btn-luxury-primary btn-large" id="btnApplyGeneratedNow">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Применить этот пресет немедленно
+                            </button>
+                            <button class="btn-luxury-secondary btn-large" id="btnSaveGeneratedToPresets">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                                Сохранить в библиотеку пресетов
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Page: Deep Network Diagnostics & DPI Scanner -->
+                <section class="tab-pane" id="pane-netscan">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Диагностика Сети & DPI Сканер</h1>
+                            <p class="page-subtitle">Полное зондирование провайдера, физического адаптера, ТСПУ и замер задержек</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn-luxury-primary" id="btnStartFullNetScan">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                                Запустить глубокое сканирование
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Provider & Geolocation Hero Card -->
+                    <div class="isp-hero-card">
+                        <div class="isp-hero-grid">
+                            <div>
+                                <span class="isp-tag">ОСНОВНОЙ ПРОВАЙДЕР СЕТИ</span>
+                                <h2 class="isp-name" id="netscanIspName">Автоматическое определение...</h2>
+                                <div class="isp-meta-row">
+                                    <span id="netscanPublicIp">--.--.--.--</span>
+                                    <span class="meta-dot">•</span>
+                                    <span id="netscanAsn">ASN: --</span>
+                                    <span class="meta-dot">•</span>
+                                    <span id="netscanOrg">--</span>
+                                </div>
+                            </div>
+                            <div class="isp-geo-badge">
+                                <span class="geo-city" id="netscanGeoCity">--</span>
+                                <span class="geo-country" id="netscanGeoCountry">--</span>
+                                <span class="geo-tz" id="netscanGeoTz">Часовой пояс: --</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dual Grid: Primary Adapter + DPI & Security Status -->
+                    <div class="netscan-dual-grid">
+                        <div class="net-card">
+                            <div class="net-card-header">
+                                <span class="net-card-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="6" y="14" width="12" height="8" rx="2" ry="2"/><line x1="12" y1="10" x2="12" y2="14"/></svg>
+                                </span>
+                                <h3>Физический сетевой адаптер (Основной)</h3>
+                            </div>
+                            <div class="adapter-fields-grid">
+                                <div class="field-item">
+                                    <span class="f-lbl">Имя интерфейса</span>
+                                    <span class="f-val" id="adName">Ethernet</span>
+                                </div>
+                                <div class="field-item">
+                                    <span class="f-lbl">Скорость линка</span>
+                                    <span class="f-val" id="adSpeed">1 Gbps</span>
+                                </div>
+                                <div class="field-item">
+                                    <span class="f-lbl">Локальный IPv4</span>
+                                    <span class="f-val" id="adIp">--</span>
+                                </div>
+                                <div class="field-item">
+                                    <span class="f-lbl">Шлюз (Gateway)</span>
+                                    <span class="f-val" id="adGateway">--</span>
+                                </div>
+                                <div class="field-item">
+                                    <span class="f-lbl">Текущий DNS</span>
+                                    <span class="f-val" id="adDns">--</span>
+                                </div>
+                                <div class="field-item">
+                                    <span class="f-lbl">MTU размер</span>
+                                    <span class="f-val" id="adMtu">1500 байт</span>
+                                </div>
+                                <div class="field-item">
+                                    <span class="f-lbl">MAC-адрес</span>
+                                    <span class="f-val" id="adMac">--</span>
+                                </div>
+                                <div class="field-item">
+                                    <span class="f-lbl">Описание контроллера</span>
+                                    <span class="f-val" id="adDesc">--</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="net-card">
+                            <div class="net-card-header">
+                                <span class="net-card-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <h3>Фильтрация ТСПУ & Безопасность</h3>
+                            </div>
+                            <div class="dpi-fields-list">
+                                <div class="dpi-status-row">
+                                    <div class="dpi-row-info">
+                                        <strong>Перехват DNS провайдером</strong>
+                                        <span id="dpiHijackDesc">Проверка подмены DNS-ответов РКН</span>
+                                    </div>
+                                    <span class="status-pill-badge" id="badgeDnsHijack">Чистый (Без подмен)</span>
+                                </div>
+                                <div class="dpi-status-row">
+                                    <div class="dpi-row-info">
+                                        <strong>TCP Timestamps</strong>
+                                        <span>Требуется для десинхронизации пакетов</span>
+                                    </div>
+                                    <span class="status-pill-badge" id="badgeTcpTimestamps">Включены (OK)</span>
+                                </div>
+                                <div class="dpi-status-row">
+                                    <div class="dpi-row-info">
+                                        <strong>WinDivert Драйвер</strong>
+                                        <span>Драйвер перехвата пакетов в ядре Windows</span>
+                                    </div>
+                                    <span class="status-pill-badge" id="badgeWinDivertReady">Установлен</span>
+                                </div>
+                                <div class="dpi-status-row">
+                                    <div class="dpi-row-info">
+                                        <strong>Маршрут YouTube CDN</strong>
+                                        <span>Разрешенный IP-адрес видеосервера</span>
+                                    </div>
+                                    <span class="val-pill" id="badgeYoutubeIp">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Latency Matrix Table -->
+                    <div class="latency-matrix-section">
+                        <div class="matrix-header">
+                            <div>
+                                <h2>Матрица задержек до серверов (Ping / Jitter)</h2>
+                                <p>Прямой замер отклика физического сетевого адаптера без виртуальных интерфейсов</p>
+                            </div>
+                            <div class="matrix-tabs-row" id="matrixClusterTabs">
+                                <button class="matrix-tab-btn active" data-cluster="games">Игры</button>
+                                <button class="matrix-tab-btn" data-cluster="ai">Нейросети</button>
+                                <button class="matrix-tab-btn" data-cluster="media">Медиа & Discord</button>
+                                <button class="matrix-tab-btn" data-cluster="dns">DNS Серверы</button>
+                            </div>
+                        </div>
+
+                        <div class="glass-card matrix-table-card">
+                            <div class="matrix-table-wrap">
+                                <table class="luxury-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Целевой сервис</th>
+                                            <th>Хост / IP</th>
+                                            <th>Средний пинг</th>
+                                            <th>Мин.</th>
+                                            <th>Макс.</th>
+                                            <th>Джиттер</th>
+                                            <th>Потери</th>
+                                            <th>Статус канала</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="netscanTableBody">
+                                        <tr><td colspan="8" class="table-loading">Нажмите «Запустить глубокое сканирование» для замера метрик</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Diagnostics Card -->
+                    <div class="glass-card" style="margin-top: 24px; padding: 22px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="font-size: 15px; font-weight: 700; color: #fff;">Диагностика системных служб Windows</h3>
+                                <p style="font-size: 12px; color: var(--text-secondary);">Проверка службы базовой фильтрации (BFE), WinDivert и конфликтующих прокси</p>
+                            </div>
+                            <button class="btn-luxury-secondary" id="btnRunSysDiagnostics">Проверить систему</button>
+                        </div>
+                        <div class="diagnostics-list" id="diagnosticsList">
+                            <div style="color: var(--text-tertiary); padding: 12px;">Нажмите «Проверить систему» для аудита компонентов.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Page 4: User Lists Editor -->
+                <section class="tab-pane" id="pane-lists">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Редактор Списков Ресурсов</h1>
+                            <p class="page-subtitle">Добавляйте свои домены, исключайте нужные сервисы и управляйте IP-фильтрами</p>
+                        </div>
+                        <div class="lists-actions">
+                            <button class="btn-luxury-primary" id="btnSaveActiveList">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                                Сохранить список
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lists-editor-layout">
+                        <div class="list-tabs-row">
+                            <button class="list-tab-btn active" data-file="list-general-user.txt">
+                                <span>Свои домены (list-general-user)</span>
+                            </button>
+                            <button class="list-tab-btn" data-file="list-exclude-user.txt">
+                                <span>Исключения доменов (list-exclude-user)</span>
+                            </button>
+                            <button class="list-tab-btn" data-file="ipset-exclude-user.txt">
+                                <span>Исключения IP (ipset-exclude-user)</span>
+                            </button>
+                            <button class="list-tab-btn" data-file="list-general.txt">
+                                <span>Базовый список (list-general.txt)</span>
+                            </button>
+                        </div>
+
+                        <div class="editor-container">
+                            <div class="editor-statusbar">
+                                <span id="editorFilename">list-general-user.txt</span>
+                                <span id="editorStats">0 строк | UTF-8</span>
+                            </div>
+                            <textarea id="listTextEditor" class="luxury-editor" spellcheck="false" placeholder="Загрузка списка..."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- Page 6: Live Terminal -->
+                <section class="tab-pane" id="pane-terminal">
+                    <div class="page-header">
+                        <div>
+                            <h1 class="page-title">Системная Консоль & Логи winws</h1>
+                            <p class="page-subtitle">Прямой перехват стандартного потока вывода и диагностических сообщений</p>
+                        </div>
+                        <div class="terminal-actions">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="chkAutoScroll" checked>
+                                <span>Автопрокрутка</span>
+                            </label>
+                            <button class="btn-ghost-small" id="btnClearTerminal">Очистить</button>
+                            <button class="btn-ghost-small" id="btnCopyTerminal">Скопировать</button>
+                        </div>
+                    </div>
+
+                    <div class="terminal-wrapper">
+                        <div class="terminal-body" id="terminalOutput">
+                            <div class="terminal-line"><span class="terminal-time">[00:00:00]</span> <span class="term-info">Zapret Private инициализирован.</span></div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Global Toast Notification Container -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- Luxury Confirmation Modal with Backdrop Blur -->
+        <div class="luxury-modal-backdrop" id="confirmModal">
+            <div class="luxury-modal-card">
+                <div class="luxury-modal-header">
+                    <div class="luxury-modal-icon-badge">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            <line x1="10" y1="11" x2="10" y2="17"/>
+                            <line x1="14" y1="11" x2="14" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="luxury-modal-title-group">
+                        <h3 class="luxury-modal-title" id="confirmModalTitle">Удаление пресета</h3>
+                        <span class="luxury-modal-subtitle">Подтверждение операции</span>
+                    </div>
+                </div>
+
+                <div class="luxury-modal-body">
+                    <p class="luxury-modal-question" id="confirmModalQuestion">Вы точно хотите удалить данный пресет?</p>
+                    <div class="luxury-modal-target-box">
+                        <div class="target-box-glow"></div>
+                        <span class="target-box-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        </span>
+                        <div class="target-box-info">
+                            <span class="target-preset-name" id="confirmModalPresetName">Идеальный пресет</span>
+                            <span class="target-preset-desc" id="confirmModalPresetDesc">Пользовательская конфигурация обхода</span>
+                        </div>
+                    </div>
+                    <p class="luxury-modal-warning">Это действие необратимо. Пресет будет удален из библиотеки конфигураций.</p>
+                </div>
+
+                <div class="luxury-modal-actions">
+                    <button type="button" class="btn-luxury-secondary modal-btn-cancel" id="btnModalCancel">
+                        Отмена
+                    </button>
+                    <button type="button" class="btn-luxury-danger modal-btn-confirm" id="btnModalConfirm">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                        <span>Да, удалить</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

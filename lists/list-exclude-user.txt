@@ -1,0 +1,11 @@
+domain.example.abc
+ea.com
+origin.com
+respawn.com
+apexlegends.com
+electronicarts.com
+bio-ea.com
+eautils.com
+vivox.com
+easyanticheat.net
+easyanticheat.com

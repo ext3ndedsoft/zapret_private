@@ -1,0 +1,94 @@
+# Гео-заблокированные и ограниченные сервисы
+hero-sms.com
+
+# Социальные сети и платформы
+instagram.com
+cdninstagram.com
+facebook.com
+fb.com
+fbcdn.net
+twitter.com
+x.com
+twimg.com
+t.co
+threads.net
+linkedin.com
+licdn.com
+bluesky.app
+bsky.app
+bsky.social
+
+# Мессенджеры и совместная работа
+signal.org
+notion.so
+miro.com
+slack.com
+
+# Музыка и аудио-стриминги
+spotify.com
+scdn.co
+audio-ak-spotify-com.akamaized.net
+soundcloud.com
+sndcdn.com
+deezer.com
+last.fm
+
+# Игровые платформы
+steamcommunity.com
+supercell.com
+brawlstars.com
+bungie.net
+nexusmods.com
+itch.io
+
+# Торренты, кинотеатры и библиотеки
+rutracker.org
+rutracker.net
+nnmclub.to
+nnm-club.me
+rutor.info
+rutor.is
+kinozal.tv
+lostfilm.tv
+hdrezka.ag
+rezka.ag
+flibusta.is
+sci-hub.se
+sci-hub.ru
+libgen.is
+libgen.rs
+
+# IT, безопасность и облака
+github.com
+githubassets.com
+githubusercontent.com
+objects.githubusercontent.com
+raw.githubusercontent.com
+gist.github.com
+api.github.com
+ghcr.io
+hetzner.com
+digitalocean.com
+linode.com
+ovhcloud.com
+kamatera.com
+fastly.com
+proton.me
+protonmail.com
+protonvpn.com
+mullvad.net
+adguard-vpn.com
+
+# Дизайн и медиа
+canva.com
+patreon.com
+shutterstock.com
+grammarly.com
+
+# Независимые СМИ
+meduza.io
+bbc.com
+bbc.co.uk
+dw.com
+themoscowtimes.com
+svoboda.org

@@ -1,0 +1,56 @@
+# OpenAI / ChatGPT
+openai.com
+chatgpt.com
+chat.openai.com
+api.openai.com
+auth0.openai.com
+platform.openai.com
+oaistatic.com
+oaiusercontent.com
+cdn.oaistatic.com
+files.oaiusercontent.com
+
+# Anthropic / Claude
+claude.ai
+anthropic.com
+api.anthropic.com
+statsig.anthropic.com
+servicedesk.anthropic.com
+
+# Google Gemini / AI Studio
+gemini.google.com
+bard.google.com
+generativelanguage.googleapis.com
+alkalimakersuite-pa.clients6.google.com
+aistudio.google.com
+deepmind.google
+proactivebackend-pa.googleapis.com
+
+# Perplexity AI
+perplexity.ai
+labs.perplexity.ai
+api.perplexity.ai
+
+# Microsoft Copilot
+copilot.microsoft.com
+sydney.bing.com
+
+# Midjourney
+midjourney.com
+cdn.midjourney.com
+
+# Grok & xAI
+x.ai
+grok.com
+api.x.ai
+
+# OpenSource AI & Repositories
+huggingface.co
+hf.co
+civitai.com
+runwayml.com
+replicate.com
+elevenlabs.io
+suno.ai
+suno.com
+udio.com

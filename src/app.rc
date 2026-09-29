@@ -1,0 +1,34 @@
+#include "resource.h"
+#include <windows.h>
+
+IDI_APP_ICON ICON "app.ico"
+IDR_PAYLOAD_ZIP RCDATA "payload.zip"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS__WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName",      "Zapret Private"
+            VALUE "FileDescription",  "Zapret Private - DPI Bypass Suite"
+            VALUE "FileVersion",      "1.0.0.0"
+            VALUE "InternalName",     "ZapretPrivate"
+            VALUE "LegalCopyright",   "Copyright (C) 2026"
+            VALUE "OriginalFilename", "ZapretPrivate.exe"
+            VALUE "ProductName",      "Zapret Private"
+            VALUE "ProductVersion",   "1.0.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
